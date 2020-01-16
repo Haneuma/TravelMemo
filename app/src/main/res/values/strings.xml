@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">TravelMemo</string>
-
+    <string name="yosansetsumei">予算を入力してください</string>
+    <string name="hinmoku">品目</string>
+    <string name="shishutsu">支出</string>
+    <string name="zandaka">残高</string>
+    <string name="hanei">反映</string>
 </resources>
