@@ -1,21 +1,33 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/tv_yosan"
-        android:text="@string/yosansetsumei"
-        android:textSize="20dp"/>
-
-    <EditText
-        android:id="@+id/et_yosan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24dp"/>
+        android:text="@string/yosansetsumei"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_yosan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="予算セット" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +42,7 @@
             android:layout_weight="0.6"
             android:inputType="textPersonName"
             android:text="@string/hinmoku"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_pay"
@@ -39,7 +51,7 @@
             android:layout_weight="0.2"
             android:inputType="textPersonName"
             android:text="@string/shishutsu"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_nokori"
@@ -48,7 +60,7 @@
             android:layout_weight="0.2"
             android:inputType="textPersonName"
             android:text="@string/zandaka"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <ScrollView
@@ -67,7 +79,14 @@
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="追加" />
+                android:text="@string/add" />
+
+            <Button
+                android:id="@+id/button_calc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calc" />
+
 
         </LinearLayout>
     </ScrollView>

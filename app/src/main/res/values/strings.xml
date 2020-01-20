@@ -5,4 +5,6 @@
     <string name="shishutsu">支出</string>
     <string name="zandaka">残高</string>
     <string name="hanei">反映</string>
+    <string name="add">追加</string>
+    <string name="calc">計算</string>
 </resources>
