@@ -1,5 +1,9 @@
 package jp.ac.jjc.travelmemo;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -27,10 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private int index3 = 2001;  //残高用
     private int yosan_int = 0;
     private int zandaka = 0;
+    Notification notification = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
 
@@ -61,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
         calc.setOnClickListener(cbl);
 
 
+        /*通知関連*/
+        String id = "notification_channel";
+        String name = getString(R.string.notification);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(id,name,importance);
+        NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(channel);
+
     }
 
     private class AddButtonListener implements View.OnClickListener {       //追加ボタンを押した際のリスナ
@@ -85,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
             //支出欄入力制限
             et_shishutsu = findViewById(index2);
-            et_shishutsu.setInputType(InputType.TYPE_CLASS_NUMBER); //入力制限
+            et_shishutsu.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED); //入力制限
 
             //ログ用
 /*           if (index1 > 1) {
@@ -124,11 +139,31 @@ public class MainActivity extends AppCompatActivity {
             index1++;
             index2++;
             index3++;
+            double zandakarate = (double)zandaka/(double)yosan_int;
+            System.out.println("debug残高"+zandaka);
+            System.out.println("debug予算"+yosan_int);
+            System.out.println("debug残高比"+zandakarate);
+            if(zandakarate < 0.3){    //残高が少なくなったら通知を飛ばす
+                //Notificationを作成するBuilderクラス生成
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this,"notification_channel");
+                //通知エリアに表示されるアイコン設定
+                builder.setSmallIcon(android.R.drawable.ic_dialog_alert);    //ここでアイコンを変更できる
+                //通知ドロワーでのタイトル設定
+                builder.setContentTitle(getString(R.string.msg_notification_title));
+                //通知ドロワーでの表示メッセージ設定
+                builder.setContentText(getString(R.string.msg_notification_text));
+                //BuilderからNotiオブジェクト生成
+                Notification notification = builder.build();
+                //NMオブジェクト取得
+                NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                //通知
+                manager.notify(0,notification);
+            }
         }
 
     }
 
-    private class YosanSetButtonListener implements View.OnClickListener{
+    private class YosanSetButtonListener implements View.OnClickListener{   //予算セットボタン押下時リスナ
         @Override
         public void onClick(View view){
             //予算欄を取得
