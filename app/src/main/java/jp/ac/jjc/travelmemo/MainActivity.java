@@ -37,13 +37,7 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
-
-
-
-
         rootView = findViewById(R.id.root);
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -51,24 +45,20 @@ public class MainActivity extends AppCompatActivity  {
         Button b = findViewById(R.id.button);
         AddButtonListener abl = new AddButtonListener();
         b.setOnClickListener(abl);
+        //↑↑ここまで変更禁止
 
-        //ここまで変更禁止
         EditText yosan = findViewById(R.id.et_yosan);       //予算欄取得
-
         //予算入力数字のみ
         yosan.setInputType(InputType.TYPE_CLASS_NUMBER);
-
         //予算セットボタン
         Button yosan_set = findViewById(R.id.button_set);
         YosanSetButtonListener ysbl = new YosanSetButtonListener();
         yosan_set.setOnClickListener(ysbl);
 
-
         //計算ボタン
         calc  = findViewById(R.id.button_calc);
         CalcButtonListener cbl = new CalcButtonListener();
         calc.setOnClickListener(cbl);
-
 
         /*通知関連*/
         String id = "notification_channel";
@@ -89,7 +79,7 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public void onClick(View view) {
             View subView = inflater.inflate(R.layout.sub, null);
-            rootView.addView(subView, rootView.getChildCount() - 2);
+            rootView.addView(subView, rootView.getChildCount()-1);
             //ここまで変更禁止
 
 
@@ -121,51 +111,61 @@ public class MainActivity extends AppCompatActivity  {
                 Log.i("残高ログ", tv_zandaka2.getText().toString());
             }
             */
-
-
+        //行を追加したらIndexを1つ増やす
+            index1++;
+            index2++;
+            index3++;
 
         }
     }
 
     private class CalcButtonListener implements View.OnClickListener {//計算ボタンを押した際のリスナ
+        //NotificationManagerオブジェクト取得
+        NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         @Override
         public void onClick(View view) {
             //改めて、予算欄・支出欄・残高欄を取得。
+                //ここでは一時的に、index番号を1つ減らしている(計算のため)
+            EditText et_shishutsu = findViewById(index2-1);
+            TextView tv_zandaka = findViewById(index3-1);
 
-            EditText et_shishutsu = findViewById(index2);
-            TextView tv_zandaka = findViewById(index3);
-
-            int shishutsu_int = 0;
+            int shishutsu_int;
 
             //入力制限・計算処理
 
             if(et_shishutsu == null){
+                    //処理なし
             }else if(et_shishutsu.getText().toString().equals("")){
+                    //処理なし
             }else{
                 shishutsu_int = Integer.parseInt(et_shishutsu.getText().toString());    //支出取得
-                zandaka = zandaka - shishutsu_int;
-                tv_zandaka.setText(String.valueOf(zandaka));
+                zandaka = zandaka - shishutsu_int;      //残り残高計算
+                tv_zandaka.setText(String.valueOf(zandaka));    //残高欄にセット
             }
 
 
 
-            //計算終了後、indexを増やす
-            index1++;
-            index2++;
-            index3++;
+            //残高比計算
+
             double zandakarate = (double)zandaka/(double)yosan_int;
+
+            /*
             System.out.println("debug残高"+zandaka);
             System.out.println("debug予算"+yosan_int);
             System.out.println("debug残高比"+zandakarate);
+             ↑デバッグ用 */
 
             if(zandakarate < 0.3){    //残高が少なくなったら通知を飛ばす
                 Notification();
+            }else if(zandakarate >= 0.3){
+                manager.cancel(0);  //↑の条件を満たさなくなったら通知を消す
             }
+
 
         }
 
         void Notification(){
-            //Notificationを作成するBuilderクラス生成
+            //Notificationを作成するBuilderクラス生成・・・(1)
             NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this,"notification_channel");
             //通知エリアに表示されるアイコン設定
             builder.setSmallIcon(android.R.drawable.ic_dialog_alert);    //ここでアイコンを変更できる
@@ -173,10 +173,8 @@ public class MainActivity extends AppCompatActivity  {
             builder.setContentTitle(getString(R.string.msg_notification_title));
             //通知ドロワーでの表示メッセージ設定
             builder.setContentText(getString(R.string.msg_notification_text));
-            //BuilderからNotiオブジェクト生成
+            //(1)からNotificationオブジェクト生成
             Notification notification = builder.build();
-            //NMオブジェクト取得
-            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
             //通知
             manager.notify(0,notification);
         }
@@ -201,4 +199,7 @@ public class MainActivity extends AppCompatActivity  {
             zandaka = yosan_int;
         }
     }
+
+
+
 }

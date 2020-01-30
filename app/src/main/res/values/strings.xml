@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">TravelMemo</string>
     <string name="yosansetsumei">予算を入力してください</string>
+    <string name="yosanset">予算セット</string>
     <string name="hinmoku">品目</string>
     <string name="shishutsu">支出</string>
     <string name="zandaka">残高</string>
     <string name="hanei">反映</string>
     <string name="add">追加</string>
     <string name="calc">計算</string>
+    <string name="delete1">1行消す</string>
     <string name="notification">通知</string>
     <string name="msg_notification_title">残高残り少ない</string>
     <string name="msg_notification_text">予算残高が残り少なくなっています。ご注意ください</string>

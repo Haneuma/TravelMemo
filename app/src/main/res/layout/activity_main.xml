@@ -26,7 +26,7 @@
             android:id="@+id/button_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="予算セット" />
+            android:text="@string/yosanset" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +40,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.6"
-            android:inputType="textPersonName"
             android:text="@string/hinmoku"
             android:textSize="20sp" />
 
@@ -49,7 +48,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:inputType="textPersonName"
             android:text="@string/shishutsu"
             android:textSize="20sp" />
 
@@ -58,7 +56,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:inputType="textPersonName"
             android:text="@string/zandaka"
             android:textSize="20sp" />
     </LinearLayout>
@@ -73,21 +70,27 @@
             android:id="@+id/root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add" />
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/button_calc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/calc" />
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add" />
+
+                <Button
+                    android:id="@+id/button_calc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calc" />
 
 
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
